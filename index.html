@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Hub | Ecossistema de Jogos Pedagógicos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b1020;
+            --card-bg: rgba(30, 41, 59, 0.85);
+            --card-border: rgba(148, 163, 184, 0.15);
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --btn-primary: #6366f1;
+            --btn-hover: #818cf8;
+            --input-bg: rgba(15, 23, 42, 0.7);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+        }
+        [data-theme="light"] {
+            --bg-color: #eef2ff;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-border: rgba(15, 23, 42, 0.08);
+            --text-color: #0f172a;
+            --text-muted: #475569;
+            --input-bg: rgba(255, 255, 255, 0.95);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 20px 60px -20px rgba(0,0,0,0.5);
+        }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .theme-btn { background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-color); padding: 6px 12px; border-radius: 999px; cursor: pointer; font-size: 13px; }
+        
+        h1 { font-size: 22px; margin: 0 0 6px 0; }
+        p.subtitle { font-size: 13.5px; color: var(--text-muted); margin: 0 0 20px 0; }
+
+        .profile-box {
+            background: var(--input-bg); border: 1px solid var(--card-border);
+            border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;
+        }
+        .profile-box label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
+        .input-group { margin-bottom: 12px; }
+        .profile-inputs-row { display: flex; gap: 8px; }
+        input, select {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--card-border);
+            border-radius: var(--radius-md); font-size: 13.5px; font-family: inherit;
+            background: var(--input-bg); color: var(--text-color); outline: none;
+        }
+        select option { background: var(--bg-color); color: var(--text-color); }
+        .btn-main {
+            background: linear-gradient(135deg, var(--btn-primary), #8b5cf6); color: #fff;
+            border: none; padding: 11px 16px; border-radius: var(--radius-md); font-weight: 700;
+            cursor: pointer; width: 100%; font-size: 14px; margin-top: 6px;
+        }
+        .btn-main:hover { opacity: 0.9; }
+
+        .modules-grid { display: grid; gap: 12px; }
+        .module-card {
+            background: var(--input-bg); border: 1px solid var(--card-border);
+            padding: 16px; border-radius: var(--radius-md); display: flex;
+            justify-content: space-between; align-items: center; text-decoration: none;
+            color: var(--text-color); transition: all 0.2s ease;
+        }
+        .module-card:hover { border-color: var(--btn-primary); transform: translateY(-2px); }
+        .module-info h3 { margin: 0 0 4px 0; font-size: 15px; }
+        .module-info p { margin: 0; font-size: 12.5px; color: var(--text-muted); }
+        .module-action { font-weight: 700; font-size: 13px; color: var(--btn-primary); }
+        .locked { opacity: 0.5; pointer-events: none; }
+        .user-badge { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13.5px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-top">
+            <span id="welcome-header" style="font-size: 13.5px; color: var(--text-muted);">Bem-vindo ao Brain Hub</span>
+            <button class="theme-btn" id="theme-toggle">🌙 Tema</button>
+        </div>
+
+        <h1>🧠 Brain Hub - Central Pedagógica</h1>
+        <p class="subtitle">Cadastre os seus dados para desbloquear e aceder aos módulos de jogos.</p>
+
+        <!-- Ecrã de Identificação (Nome e E-mail) -->
+        <div id="setup-screen" class="profile-box">
+            <div class="input-group">
+                <label for="input-nome">Nome Completo</label>
+                <div class="profile-inputs-row">
+                    <select id="select-avatar" style="width: 75px; text-align: center;">
+                        <option value="👨‍🏫">👨‍🏫</option>
+                        <option value="👩‍🏫">👩‍🏫</option>
+                        <option value="💡">💡</option>
+                        <option value="🚀">🚀</option>
+                        <option value="🎓">🎓</option>
+                    </select>
+                    <input type="text" id="input-nome" placeholder="Digite o seu nome completo...">
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="input-email">E-mail Institucional ou Pessoal</label>
+                <input type="email" id="input-email" placeholder="exemplo@escola.se.df.gov.br">
+            </div>
+
+            <button class="btn-main" id="btn-salvar-perfil">Salvar Registo e Desbloquear Módulos</button>
+        </div>
+
+        <!-- Lista de Módulos (Quizzes e Simuladores) -->
+        <div class="modules-grid" id="modules-list">
+            <a href="quiz.html" class="module-card locked" id="mod-quiz">
+                <div class="module-info">
+                    <h3>📝 Quiz Técnico-Pedagógico</h3>
+                    <p>Avaliação formativa baseada em Perrenoud, Freire e competências.</p>
+                </div>
+                <div class="module-action">Aceder ➔</div>
+            </a>
+
+            <a href="simulador.html" class="module-card locked" id="mod-simulador">
+                <div class="module-info">
+                    <h3>🧭 Simulador de Relações Humanas</h3>
+                    <p>Tomada de decisão em cenários de gestão de conflitos e práxis.</p>
+                </div>
+                <div class="module-action">Aceder ➔</div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Gestão de Tema
+        const themeBtn = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('brain_hub_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeBtn.textContent = savedTheme === 'dark' ? '☀️ Claro' : '🌙 Escuro';
+
+        themeBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('brain_hub_theme', next);
+            themeBtn.textContent = next === 'dark' ? '☀️ Claro' : '🌙 Escuro';
+        });
+
+        // Gestão de Utilizador Global (Nome e E-mail)
+        const setupScreen = document.getElementById('setup-screen');
+        const inputNome = document.getElementById('input-nome');
+        const inputEmail = document.getElementById('input-email');
+        const selectAvatar = document.getElementById('select-avatar');
+        const btnSalvar = document.getElementById('btn-salvar-perfil');
+        const welcomeHeader = document.getElementById('welcome-header');
+        const modQuiz = document.getElementById('mod-quiz');
+        const modSimulador = document.getElementById('mod-simulador');
+
+        function verificarSessao() {
+            const nomeSalvo = localStorage.getItem('brain_hub_nome');
+            const emailSalvo = localStorage.getItem('brain_hub_email');
+            const avatarSalvo = localStorage.getItem('brain_hub_avatar');
+
+            if (nomeSalvo && emailSalvo) {
+                setupScreen.style.display = 'none';
+                welcomeHeader.innerHTML = `<div class="user-badge"><span>${avatarSalvo || '👨‍🏫'}</span> <b>${nomeSalvo}</b> <a href="#" id="trocar-nome" style="color:var(--btn-primary); font-size:12px; text-decoration:none; margin-left:6px;">[alterar]</a></div>`;
+                modQuiz.classList.remove('locked');
+                modSimulador.classList.remove('locked');
+            }
+        }
+
+        btnSalvar.addEventListener('click', () => {
+            const nome = inputNome.value.trim();
+            const email = inputEmail.value.trim();
+
+            if (!nome) {
+                alert('Por favor, digite o seu nome completo.');
+                inputNome.focus();
+                return;
+            }
+            if (!email || !email.includes('@')) {
+                alert('Por favor, digite um e-mail válido.');
+                inputEmail.focus();
+                return;
+            }
+
+            localStorage.setItem('brain_hub_nome', nome);
+            localStorage.setItem('brain_hub_email', email);
+            localStorage.setItem('brain_hub_avatar', selectAvatar.value);
+            verificarSessao();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'trocar-nome') {
+                e.preventDefault();
+                localStorage.removeItem('brain_hub_nome');
+                localStorage.removeItem('brain_hub_email');
+                localStorage.removeItem('brain_hub_avatar');
+                location.reload();
+            }
+        });
+
+        verificarSessao();
+    </script>
+</body>
+</html>
